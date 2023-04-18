@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const connectDatabase = () => {
     console.log('Wait connecting to the database')
 
-    mongoose.connect("mongodb+srv://oseiasc2:j3qqlbCc4YFFqnAP@apopydb.e92lo9p.mongodb.net/?retryWrites=true&w=majority", 
+    mongoose.connect( process.env.MONGODB_URI, 
     { 
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -12,4 +12,4 @@ const connectDatabase = () => {
     .catch(err => console.log(err))
 }
 
-module.exports = connectDatabase
+export default connectDatabase

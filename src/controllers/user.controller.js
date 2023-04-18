@@ -1,7 +1,8 @@
-const userService = require('../services/user.service')
-const mongoose = require('mongoose')
+import userService from '../services/user.service.js'
+import mongoose from 'mongoose'
 
 const create = async (req, res) => {
+   try { 
     const { name, email, password, phone } = req.body
     
     if (!name || !email || !password || !phone){
@@ -12,22 +13,33 @@ const create = async (req, res) => {
     if(!user){
         return res.status(400).send({ message: "Error creating User"})
     }
-
     
     res.status(201).send({  user: { id: user._id, name, email, phone }, message: "User created successfully" })
+
+    } catch (err) {
+        res.status(500).send({message: err.message})
+    }
 }
 
 const findById = async (req, res) => {
-    const id = req.id
+    try {
 
-    // const user = await userService.findByIdService(id)
-    const user = req.user
-    res.send(user)
+        const id = req.id
+        
+        // const user = await userService.findByIdService(id)
+        const user = req.user
+        res.send(user)
+
+    }  catch (err) {
+        res.status(500).send({message: err.message})
+    }
 }
 
 
 const update = async (req, res) => {
-    const { name, email, password, phone } = req.body
+
+    try{
+        const { name, email, password, phone } = req.body
     
     if (!name && !email && !password && !phone){
         res.status(400).send({ message : "Submit at least one field for upgrade"})
@@ -40,6 +52,9 @@ const update = async (req, res) => {
     await userService.updateService(id, name, email, password, phone)
 
     res.send({ message: "User successfully updated!"})
+    } catch (err) {
+        res.status(500).send({ message: err.message})
+    }
 }
 
-module.exports = { create, findById, update }
+export default { create, findById, update }
