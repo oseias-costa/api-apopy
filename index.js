@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 
 import userRoute from './src/routes/user.route.js'
 import authRoute from './src/routes/auth.route.js'
+import CategoryRoute from './src/routes/category.route.js'
 
 
 dotenv.config()
@@ -15,5 +16,6 @@ connectDatabase()
 
 app.use("/user", userRoute)
 app.use("/auth", authRoute)
+app.use("/category", CategoryRoute)
 
 app.listen(port, () => console.log(`Server running on port http://localhost:${port}`))
